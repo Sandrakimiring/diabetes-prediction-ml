@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from models.model import predict_diabetes
 
-app = FastAPI() 
+app = FastAPI()
 
 class DiabetesInput(BaseModel):
     pregnancies: int
@@ -13,6 +13,10 @@ class DiabetesInput(BaseModel):
     bmi: float
     diabetes_pedigree_function: float
     age: int
+
+@app.get("/")
+async def root():
+    return {"message": "Diabetes prediction API is running. Use POST /predict to get predictions."}
 
 @app.post("/predict")
 def predict(input_data: DiabetesInput):
